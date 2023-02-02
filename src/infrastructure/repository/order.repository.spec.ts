@@ -9,6 +9,7 @@ import OrderItemModel from "../db/sequelize/model/order-item.model";
 import OrderModel from "../db/sequelize/model/order.model";
 import ProductModel from "../db/sequelize/model/product.model";
 import CustomerRepository from "./customer.repository";
+import OrderRepository from "./order.repository";
 import ProductRepository from "./product.repository";
 
 describe("Order repository test", () => {
@@ -59,7 +60,7 @@ describe("Order repository test", () => {
       include: ["items"],
     });
 
-    expect(orderModel.toJSON).toStrictEqual({
+    expect(orderModel.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
       total: order.total(),
@@ -69,6 +70,7 @@ describe("Order repository test", () => {
           name: ordemItem.name,
           price: ordemItem.price,
           quantity: ordemItem.quantity,
+          product_id: "123",
           order_id: "123",
         },
       ],
