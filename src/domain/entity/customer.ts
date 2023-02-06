@@ -1,3 +1,10 @@
+import EventDispatcher from "../event/@shared/event-dispatcher";
+import EventHandlerInterface from "../event/@shared/event-handler.interface";
+import EventInterface from "../event/@shared/event.interfacec";
+import CustomerCreatedEvent from "../event/customer/customer-created.event";
+import EnviaConsoleLogHandler from "../event/customer/handle/envia-console-log.handler";
+import EnviaConsoleLog1Handler from "../event/customer/handle/envia-console-log1.handler";
+import EnviaConsoleLog2Handler from "../event/customer/handle/envia-console-log2.handler";
 import Address from "./address";
 
 export default class Customer {
@@ -9,6 +16,19 @@ export default class Customer {
   private _rewardPoints = 0;
 
   constructor(id: string, name: string) {
+    const eventHandler1 = new EnviaConsoleLog1Handler();
+    const eventHandler2 = new EnviaConsoleLog2Handler();
+    
+    const eventDispatcher = new EventDispatcher();
+    eventDispatcher.register("CustomerCreatedEvent", eventHandler1);
+    eventDispatcher.register("CustomerCreatedEvent", eventHandler2);
+
+    const customerCreatedEvent = new CustomerCreatedEvent({
+      name: this._name,
+    });
+
+    eventDispatcher.notify(customerCreatedEvent);
+
     this._id = id;
     this._name = name;
     this.validate();
@@ -49,6 +69,24 @@ export default class Customer {
   }
 
   changeAddress(address: Address) {
+    const eventDispatcher = new EventDispatcher();
+    const eventHandler = new EnviaConsoleLogHandler();
+
+    eventDispatcher.register("CustomerCreatedEvent", eventHandler);
+    
+    const customerCreatedEvent = new CustomerCreatedEvent({
+      id: this._id,
+      name: this._name,
+      address: {
+        street: address.street,
+        number: address.number,
+        zip: address.zip,
+        city: address.city,
+      }
+    });
+    
+    eventDispatcher.notify(customerCreatedEvent);
+
     this._address = address;
   }
 
