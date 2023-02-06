@@ -25,9 +25,16 @@ export default class EventDispatcher implements EventDispatcherInterface {
     }
   }
 
-  notify(event: EventInterface): void {}
-
   unregisterAll(): void {
     this.eventHandlers = {};
+  }
+  
+  notify(event: EventInterface): void {
+    const eventName = event.constructor.name;
+    if(this.eventHandlers[eventName]) {
+      this.getEventHandlers[eventName].forEach((eventHandler) => {
+        eventHandler.handle(event)
+      })
+    }
   }
 }
