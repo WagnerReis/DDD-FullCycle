@@ -1,6 +1,6 @@
 import EventDispatcher from "../event/@shared/event-dispatcher";
 import EventHandlerInterface from "../event/@shared/event-handler.interface";
-import EventInterface from "../event/@shared/event.interfacec";
+import EventInterface from "../event/@shared/event.interface";
 import CustomerCreatedEvent from "../event/customer/customer-created.event";
 import EnviaConsoleLogHandler from "../event/customer/handle/envia-console-log.handler";
 import EnviaConsoleLog1Handler from "../event/customer/handle/envia-console-log1.handler";
