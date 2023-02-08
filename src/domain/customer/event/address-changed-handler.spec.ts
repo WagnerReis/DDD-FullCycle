@@ -1,6 +1,6 @@
-import Address from "../../entity/address";
-import Customer from "../../entity/customer";
-import EventDispatcher from "../@shared/event-dispatcher";
+import EventDispatcher from "../../@shared/event/event-dispatcher";
+import Address from "../../customer/value-object/address";
+import Customer from "../entity/customer";
 import CustomerCreatedEvent from "./customer-created.event";
 import EnviaConsoleLogHandler from "./handle/envia-console-log.handler";
 
