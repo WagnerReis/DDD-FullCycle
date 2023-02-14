@@ -3,7 +3,11 @@ import Customer from "../../../domain/customer/entity/customer";
 import Address from "../../../domain/customer/value-object/address";
 import CustomerModel from "../../../infrastructure/customer/repository/sequelize/customer.model";
 import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
-import { InputFindCustomerDto, OutputFindCustomerDto } from "./find.customer.dto";
+import {
+  InputFindCustomerDto,
+  OutputFindCustomerDto,
+} from "./find.customer.dto";
+import FindCustomerUseCase from "./find.customer.usecase";
 
 describe("Test find customer use case", () => {
   let sequelize: Sequelize;
