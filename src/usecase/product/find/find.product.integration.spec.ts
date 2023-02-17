@@ -20,6 +20,7 @@ describe("Integration test find product use case", () => {
   });
 
   afterEach(async () => {
+    await sequelize.truncate({ cascade: true });
     await sequelize.close();
   });
 
@@ -44,5 +45,19 @@ describe("Integration test find product use case", () => {
     const result = await findProductUseCase.execute(input);
 
     expect(result).toEqual(output);
+  });
+
+  it("should no product found", async () => {
+    const productRepository = new ProductRepository();
+
+    const findProductUseCase = new FindProductUseCase(productRepository);
+
+    const input = {
+      id: "123",
+    };
+
+    expect(async () => {
+      await findProductUseCase.execute(input);
+    }).rejects.toThrow("No product found");
   });
 });

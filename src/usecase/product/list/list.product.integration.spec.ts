@@ -20,7 +20,7 @@ describe("Integration test list product use case", () => {
   });
 
   afterAll(async () => {
-    await sequelize.truncate({ cascade: true })
+    await sequelize.truncate({ cascade: true });
     await sequelize.close();
   });
 
@@ -44,6 +44,7 @@ describe("Integration test list product use case", () => {
     expect(output.products[1].name).toBe(product2.name);
     expect(output.products[1].price).toBe(product2.price);
   });
+
   it("should no product found", async () => {
     const productRepository = new ProductRepository();
     const listProductUseCase = new ListProductUseCase(productRepository);
