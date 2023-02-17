@@ -12,6 +12,12 @@ export default class ProductRepository implements ProductRepositoryInterface {
   }
 
   async update(entity: Product): Promise<void> {
+    const repository = await ProductModel.findOne({ where: { id: entity.id } });
+
+    if (!repository) {
+      throw new Error("Product not found");
+    }
+
     await ProductModel.update(
       {
         name: entity.name,
@@ -27,16 +33,16 @@ export default class ProductRepository implements ProductRepositoryInterface {
 
   async find(id: string): Promise<Product> {
     const productModel = await ProductModel.findOne({ where: { id } });
-    if(!productModel) {
-      throw new Error("No product found")
+    if (!productModel) {
+      throw new Error("No product found");
     }
     return new Product(productModel.id, productModel.name, productModel.price);
   }
 
   async findAll(): Promise<Product[]> {
     const productModels = await ProductModel.findAll();
-    if(!productModels.length) {
-      throw new Error("No product found")
+    if (!productModels.length) {
+      throw new Error("No product found");
     }
     return productModels.map(
       (productModel) =>
