@@ -32,6 +32,9 @@ export default class ProductRepository implements ProductRepositoryInterface {
 
   async findAll(): Promise<Product[]> {
     const productModels = await ProductModel.findAll();
+    if(!productModels.length) {
+      throw new Error("No product found")
+    }
     return productModels.map(
       (productModel) =>
         new Product(productModel.id, productModel.name, productModel.price)
