@@ -20,11 +20,11 @@ export default class ListProductUseCase {
 class OutputMapper {
   static toOutput(products: Product[]): OutputListProductDto {
     return {
-      products: products.map(product => ({
+      products: products.map((product) => ({
         id: product.id,
         name: product.name,
-        price: product.price
-      }))
-    }
+        price: product.price,
+      })),
+    };
   }
 }

@@ -47,7 +47,7 @@ describe("Integration test find product use case", () => {
     expect(result).toEqual(output);
   });
 
-  it("should no product found", async () => {
+  it("should throw product not found", async () => {
     const productRepository = new ProductRepository();
 
     const findProductUseCase = new FindProductUseCase(productRepository);

@@ -21,7 +21,7 @@ describe("Integration test create product use case", () => {
   afterEach(async () => {
     await sequelize.close();
   });
-  
+
   it("should create a product", async () => {
     const productRepository = new ProductRepository();
     const createProductUseCase = new CreateProductUseCase(productRepository);
@@ -37,6 +37,6 @@ describe("Integration test create product use case", () => {
       id: expect.any(String),
       name: input.name,
       price: input.price,
-    })
+    });
   });
 });

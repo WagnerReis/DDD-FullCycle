@@ -45,7 +45,7 @@ describe("Integration test list product use case", () => {
     expect(output.products[1].price).toBe(product2.price);
   });
 
-  it("should no product found", async () => {
+  it("should throw product not found", async () => {
     const productRepository = new ProductRepository();
     const listProductUseCase = new ListProductUseCase(productRepository);
 

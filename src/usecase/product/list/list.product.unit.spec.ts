@@ -36,10 +36,10 @@ describe("Unit test for listing product use case", () => {
 
     productRepository.findAll.mockImplementation(() => {
       throw new Error("No product found");
-    })
+    });
 
     expect(async () => {
-      return await listProductUseCase.execute({})
+      return await listProductUseCase.execute({});
     }).rejects.toThrow("No product found");
   });
 });
