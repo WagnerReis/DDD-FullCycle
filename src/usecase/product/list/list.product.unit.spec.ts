@@ -30,7 +30,7 @@ describe("Unit test for listing product use case", () => {
     expect(output.products[1].price).toBe(product2.price);
   });
 
-  it("should thow error when no product found", async () => {
+  it("should no product found", async () => {
     const productRepository = MockRepository();
     const listProductUseCase = new ListProductUseCase(productRepository);
 
