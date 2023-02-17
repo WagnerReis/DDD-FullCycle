@@ -19,7 +19,8 @@ describe("Integration test list product use case", () => {
     await sequelize.sync();
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
+    await sequelize.truncate({ cascade: true })
     await sequelize.close();
   });
 
@@ -43,24 +44,12 @@ describe("Integration test list product use case", () => {
     expect(output.products[1].name).toBe(product2.name);
     expect(output.products[1].price).toBe(product2.price);
   });
-  it("should list all products", async () => {
+  it("should no product found", async () => {
     const productRepository = new ProductRepository();
     const listProductUseCase = new ListProductUseCase(productRepository);
 
-    const product1 = new Product("123", "Product 1", 1);
-    await productRepository.create(product1);
-    const product2 = new Product("456", "Product 2", 2);
-    await productRepository.create(product2);
-
-    const output = await listProductUseCase.execute({});
-
-    expect(output.products.length).toBe(2);
-    expect(output.products[0].id).toBe(product1.id);
-    expect(output.products[0].name).toBe(product1.name);
-    expect(output.products[0].price).toBe(product1.price);
-
-    expect(output.products[1].id).toBe(product2.id);
-    expect(output.products[1].name).toBe(product2.name);
-    expect(output.products[1].price).toBe(product2.price);
+    expect(async () => {
+      await listProductUseCase.execute({});
+    }).rejects.toThrow("No product found");
   });
 });
