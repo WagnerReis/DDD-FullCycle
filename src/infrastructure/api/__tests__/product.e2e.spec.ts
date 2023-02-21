@@ -56,4 +56,9 @@ describe("E2E test for product", () => {
     expect(product2.name).toBe("Product 2");
     expect(product2.price).toBe(4);
   });
+
+  it("should not found products", async () => {
+    const listResponse = await request(app).get("/product").send();
+    expect(listResponse.status).toBe(500);
+  });
 });
