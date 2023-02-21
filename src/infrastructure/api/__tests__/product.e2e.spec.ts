@@ -61,4 +61,30 @@ describe("E2E test for product", () => {
     const listResponse = await request(app).get("/product").send();
     expect(listResponse.status).toBe(500);
   });
+
+  it("should find a product", async () => {
+    const response = await request(app).post("/product").send({
+      name: "Product 1",
+      price: 2,
+    });
+
+    expect(response.status).toBe(200);
+
+    const findResponse = await request(app)
+      .get(`/product/${response.body.id}`)
+      .send();
+
+    expect(findResponse.status).toBe(200);
+    expect(findResponse.body.id).toEqual(expect.any(String));
+    expect(findResponse.body.name).toBe("Product 1");
+    expect(findResponse.body.price).toBe(2);
+  });
+  
+  it("should not find a product", async () => {
+    const findResponse = await request(app)
+      .get(`/product/123456`)
+      .send();
+
+    expect(findResponse.status).toBe(500);
+  });
 });

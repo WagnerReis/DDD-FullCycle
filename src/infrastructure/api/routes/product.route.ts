@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
 import CreateProductUseCase from "../../../usecase/product/create/create.product.usecase";
+import FindProductUseCase from "../../../usecase/product/find/find.product.usecase";
 import ListProductUseCase from "../../../usecase/product/list/list.product.usecase";
 import ProductRepository from "../../product/repository/sequelize/product.repository";
 
 export const productRoute = express.Router();
 
-productRoute.post('/', async (req: Request, res: Response) => {
+productRoute.post("/", async (req: Request, res: Response) => {
   const useCase = new CreateProductUseCase(new ProductRepository());
 
   try {
@@ -21,11 +22,26 @@ productRoute.post('/', async (req: Request, res: Response) => {
   }
 });
 
-productRoute.get('/', async (req: Request, res: Response) => {
+productRoute.get("/", async (req: Request, res: Response) => {
   const useCase = new ListProductUseCase(new ProductRepository());
 
   try {
     const output = await useCase.execute({});
+    res.send(output);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+productRoute.get("/:id", async (req: Request, res: Response) => {
+  const useCase = new FindProductUseCase(new ProductRepository());
+
+  const findProductDto = {
+    id: req.params.id
+  }
+
+  try {
+    const output = await useCase.execute(findProductDto);
     res.send(output);
   } catch (err) {
     res.status(500).send(err);
