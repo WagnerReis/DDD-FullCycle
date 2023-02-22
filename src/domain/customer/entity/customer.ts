@@ -15,7 +15,7 @@ export default class Customer extends Entity {
 
   constructor(id: string, name: string) {
     super();
-    this.id = id;
+    this._id = id;
     const eventHandler1 = new EnviaConsoleLog1Handler();
     const eventHandler2 = new EnviaConsoleLog2Handler();
 
