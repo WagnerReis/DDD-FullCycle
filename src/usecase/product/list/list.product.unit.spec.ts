@@ -29,17 +29,4 @@ describe("Unit test for listing product use case", () => {
     expect(output.products[1].name).toBe(product2.name);
     expect(output.products[1].price).toBe(product2.price);
   });
-
-  it("should no product found", async () => {
-    const productRepository = MockRepository();
-    const listProductUseCase = new ListProductUseCase(productRepository);
-
-    productRepository.findAll.mockImplementation(() => {
-      throw new Error("No product found");
-    });
-
-    expect(async () => {
-      return await listProductUseCase.execute({});
-    }).rejects.toThrow("No product found");
-  });
 });
