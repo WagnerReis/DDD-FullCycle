@@ -5,6 +5,7 @@ import CustomerCreatedEvent from "../event/customer-created.event";
 import EnviaConsoleLogHandler from "../event/handle/envia-console-log.handler";
 import EnviaConsoleLog1Handler from "../event/handle/envia-console-log1.handler";
 import EnviaConsoleLog2Handler from "../event/handle/envia-console-log2.handler";
+import CustomerValidatorFactory from "../factory/customer.validator.factory";
 import Address from "../value-object/address";
 
 export default class Customer extends Entity {
@@ -54,18 +55,7 @@ export default class Customer extends Entity {
   }
 
   validate() {
-    if (this.id.length === 0) {
-      this.notification.addError({
-        context: "customer",
-        message: "Id is required",
-      });
-    }
-    if (this._name.length === 0) {
-      this.notification.addError({
-        context: "customer",
-        message: "Name is required",
-      });
-    }
+    CustomerValidatorFactory.create().validate(this);
   }
 
   changeName(name: string) {

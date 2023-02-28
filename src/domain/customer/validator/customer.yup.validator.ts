@@ -9,7 +9,7 @@ export default class CustomerYupValidator
     try {
       ypu.object().shape({
         id: ypu.string().required("Id is required"),
-        name: ypu.string().required("Id is required"),
+        name: ypu.string().required("Name is required"),
       })
       .validateSync({
         id: entity.id,
