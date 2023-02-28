@@ -1,11 +1,12 @@
-import express, { Request, Response } from 'express';
-import CreateCustomerUseCase from '../../../usecase/customer/create/create.customer.usecase';
-import ListCustomerUseCase from '../../../usecase/customer/list/list.customer.usecase';
-import CustomerRepository from '../../customer/repository/sequelize/customer.repository';
+import express, { Request, Response } from "express";
+import CreateCustomerUseCase from "../../../usecase/customer/create/create.customer.usecase";
+import FindCustomerUseCase from "../../../usecase/customer/find/find.customer.usecase";
+import ListCustomerUseCase from "../../../usecase/customer/list/list.customer.usecase";
+import CustomerRepository from "../../customer/repository/sequelize/customer.repository";
 
 export const customerRoute = express.Router();
 
-customerRoute.post('/', async (req: Request, res: Response) => {
+customerRoute.post("/", async (req: Request, res: Response) => {
   const useCase = new CreateCustomerUseCase(new CustomerRepository());
   try {
     const customerDto = {
@@ -15,23 +16,36 @@ customerRoute.post('/', async (req: Request, res: Response) => {
         city: req.body.address.city,
         number: req.body.address.number,
         zip: req.body.address.zip,
-      }
-    }
+      },
+    };
 
     const output = await useCase.execute(customerDto);
-    res.send(output)
-  } catch(err) {
+    res.send(output);
+  } catch (err) {
     res.status(500).send(err);
   }
 });
 
-customerRoute.get('/', async (req:Request, res: Response) => {
-  const useCase = new ListCustomerUseCase(new CustomerRepository);
-  
+customerRoute.get("/", async (req: Request, res: Response) => {
+  const useCase = new ListCustomerUseCase(new CustomerRepository());
+
   try {
     const output = await useCase.execute({});
-    res.send(output)
-  } catch(err) {
+    res.send(output);
+  } catch (err) {
     res.status(500).send(err);
   }
-})
+});
+customerRoute.get("/:id", async (req: Request, res: Response) => {
+  const useCase = new FindCustomerUseCase(new CustomerRepository());
+
+  try {
+    const customerDto = {
+      id: req.params.id
+    }
+    const output = await useCase.execute(customerDto);
+    res.send(output);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
