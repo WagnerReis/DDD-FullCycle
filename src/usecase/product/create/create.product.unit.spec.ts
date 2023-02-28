@@ -39,7 +39,7 @@ describe("Unit test create product use case", () => {
     );
   });
 
-  it("shoul throw an erro when price is missing", async () => {
+  it("shoul throw an erro when price less than 0", async () => {
     const productRepository = MockRepository();
     const createProductUseCase = new CreateProductUseCase(productRepository);
 
@@ -47,7 +47,7 @@ describe("Unit test create product use case", () => {
     input.price = -1;
 
     expect(createProductUseCase.execute(input)).rejects.toThrow(
-      "Price must be greater than zero"
+      "product: price must be greater than 0"
     );
   });
 });

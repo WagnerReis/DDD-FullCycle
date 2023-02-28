@@ -22,7 +22,7 @@ describe("Product unit tests", () => {
   it("should throw erro when price less than 0", () => {
     expect(() => {
       new Product("123", "Product 1", -1);
-    }).toThrowError("product: Price must be greater than zero");
+    }).toThrowError("product: price must be greater than 0");
   });
 
   it("should change name", () => {
